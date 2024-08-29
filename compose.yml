@@ -1,0 +1,69 @@
+services:
+  dns:
+    build:
+      context: ./dns
+      dockerfile: Dockerfile
+    image: bind9
+    container_name: bind9
+    ports:
+      - "53:53/udp"
+      - "953/tcp"
+    networks:
+      - asa-net
+
+  nginx:
+    build: 
+      context: ./nginx
+      dockerfile: Dockerfile
+    image: proxy
+    container_name: proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - portal
+    networks:
+      - asa-net
+
+
+
+
+  portal:
+    image: wordpress
+    restart: always
+    container_name: wordpress
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_USER: db_asa_user
+      WORDPRESS_DB_PASSWORD: db_asa_pass
+      WORDPRESS_DB_NAME: db_wordpress
+    networks:
+      - asa-net
+    volumes:
+      - wordpress:/var/www/html
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    restart: always
+    container_name: db
+    environment:
+      MYSQL_DATABASE: db_wordpress
+      MYSQL_USER: db_asa_user
+      MYSQL_PASSWORD: db_asa_pass
+      MYSQL_RANDOM_ROOT_PASSWORD: '1'
+    
+    networks:
+      - asa-net
+    volumes:
+      - db:/var/lib/mysql
+   
+
+networks:
+  asa-net:
+    driver: bridge
+
+volumes:
+  wordpress:
+  db:
