@@ -1,0 +1,12 @@
+zone "ifrn.asa.br" { 
+	type master;
+	file "/etc/bind/db.ifrn.asa.br";	
+	allow-transfer {0.0.0.0; };		
+};
+
+zone "diac.ifrn.asa.br" { 
+	type master;
+	file "/etc/bind/db.diac.ifrn.asa.br";	
+	allow-transfer {0.0.0.0; };	
+};
+
