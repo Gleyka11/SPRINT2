@@ -22,7 +22,7 @@
 
 <i>Criar o repositorio no git e clonar:</i>
 
-    git clone https://github.com/Gleyka11/SPRINT1.git
+    git clone https://github.com/Gleyka11/SPRINT2.git
 
 <i>Para subir os containers no docker:</i>
 
