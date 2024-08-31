@@ -14,7 +14,7 @@
         <li>Configuração do proxy reverso (HTTP) com mais um host virtual para o servidor Web Content (site 2)</li>
         <li>Configuração do site no WordPress do de X.IFRN.ASA.BR</li>
         
-    </ul>
+</ul>
 </body>
 </html>
 
