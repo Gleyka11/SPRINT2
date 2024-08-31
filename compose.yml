@@ -105,3 +105,4 @@ networks:
 volumes:
   wordpress:
   db:
+  db2:
