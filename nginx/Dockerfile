@@ -8,9 +8,9 @@ COPY cert.crt /etc/nginx/ssl
 
 COPY cert.key /etc/nginx/ssl
 
-COPY cert2.crt /etc/nginx/ssl
+#COPY cert2.crt /etc/nginx/ssl
 
-COPY cert2.key /etc/nginx/ssl
+#COPY cert2.key /etc/nginx/ssl
 
 RUN chown -R root:root /etc/nginx/ssl
 

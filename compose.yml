@@ -25,9 +25,6 @@ services:
     networks:
       - asa-net
 
-
-
-
   portal:
     image: wordpress
     restart: always
@@ -60,44 +57,6 @@ services:
       - db:/var/lib/mysql
 
 
-  portal2:
-    build:
-      context: ./portal2
-      dockerfile: Dockerfile
-    image: wordpresss
-    restart: always
-    container_name: wordpresss
-    environment:
-      WORDPRESS_DB_HOST: db2
-      WORDPRESS_DB_USER: db_asa_user
-      WORDPRESS_DB_PASSWORD: db_asa_pass
-      WORDPRESS_DB_NAME: db2_wordpresss
-    networks:
-      - asa-net
-    volumes:
-      - wordpress:/var/www/html
-    depends_on:
-      - db2
-
-  db2:
-    build:
-      context: ./portal2
-      dockerfile: Dockerfile
-    image: mysql:5.7
-    restart: always
-    container_name: db2
-    environment:
-      MYSQL_DATABASE: db_wordpresss
-      MYSQL_USER: db_asa_user
-      MYSQL_PASSWORD: db_asa_pass
-      MYSQL_RANDOM_ROOT_PASSWORD: '1'
-    
-    networks:
-      - asa-net
-    volumes:
-      - db:/var/lib/mysql
-   
-
 networks:
   asa-net:
     driver: bridge
@@ -105,4 +64,3 @@ networks:
 volumes:
   wordpress:
   db:
-  db2:
