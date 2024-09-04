@@ -56,9 +56,6 @@ services:
     volumes:
       - db:/var/lib/mysql
 
-
-      - asa-net
-
 networks:
   asa-net:
     driver: bridge
