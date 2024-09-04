@@ -56,53 +56,7 @@ services:
     volumes:
       - db:/var/lib/mysql
 
-  email:
-    build:
-      context: ./email
-      dockerfile: Dockerfile
-    image: email
-    container_name: email
-    ports:
-      - "25:25/tcp"
-      - "587:587/tcp"
-      - "110:110/tcp"
-      - "995:995/tcp"
-      - "143:143/tcp"
-      - "993:993/tcp"
-    networks:
-      - asa-net
 
-  nextcloud:
-    image: nextcloud
-    container_name: nextcloud
-    restart: always
-    #ports:
-    #  - 8080:80
-    links:
-      - db_nextcloud
-    volumes:
-      - nextcloud:/var/www/html
-    environment:
-      - MYSQL_PASSWORD=nextcloud-p@ss
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-      - MYSQL_HOST=db_nextcloud
-    networks:
-      - asa-net
-
-  db_nextcloud:
-    image: mariadb:10.6
-    container_name: db_nextcloud
-    restart: always
-    command: --transaction-isolation=READ-COMMITTED --log-bin=binlog --binlog-format=ROW
-    volumes:
-      - db_nextcloud:/var/lib/mysql
-    environment:
-      - MYSQL_ROOT_PASSWORD=nextcloud-p@ss
-      - MYSQL_PASSWORD=nextcloud-p@ss
-      - MYSQL_DATABASE=nextcloud
-      - MYSQL_USER=nextcloud
-    networks:
       - asa-net
 
 networks:
@@ -112,4 +66,4 @@ networks:
 volumes:
   wordpress:
   db:
-  nextcloud:
+  
