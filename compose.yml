@@ -3,11 +3,11 @@ services:
     build:
       context: ./dns
       dockerfile: Dockerfile
-    image: bind9
-    container_name: bind9
+    image: dns
+    container_name: dns
     ports:
       - "53:53/udp"
-      - "953/tcp"
+      - "53:53/tcp"
     networks:
       - asa-net
 
@@ -21,46 +21,65 @@ services:
       - "80:80"
       - "443:443"
     depends_on:
-      - portal
+      - web01
+      - web02
     networks:
       - asa-net
 
-  portal:
-    image: wordpress
+  web01:
+    image: wordpress:latest
     restart: always
     container_name: wordpress
     environment:
-      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_HOST: db1
       WORDPRESS_DB_USER: db_asa_user
       WORDPRESS_DB_PASSWORD: db_asa_pass
       WORDPRESS_DB_NAME: db_wordpress
     networks:
       - asa-net
     volumes:
-      - wordpress:/var/www/html
+      - wordpress1:/var/www/html
     depends_on:
-      - db
+      - db1
 
-  db:
+  db1:
     image: mysql:5.7
     restart: always
-    container_name: db
+    container_name: db1
     environment:
       MYSQL_DATABASE: db_wordpress
       MYSQL_USER: db_asa_user
       MYSQL_PASSWORD: db_asa_pass
       MYSQL_RANDOM_ROOT_PASSWORD: '1'
-    
     networks:
       - asa-net
     volumes:
-      - db:/var/lib/mysql
+      - db1:/var/lib/mysql
+
+  web02:
+    image: wordpress
+    restart: always
+    container_name: wordpress2
+    environment:
+      WORDPRESS_DB_HOST: db1
+      WORDPRESS_DB_USER: db_asa_user
+      WORDPRESS_DB_PASSWORD: db_asa_pass
+      WORDPRESS_DB_NAME: db_wordpress
+    networks:
+      - asa-net
+    volumes:
+      - wordpress2:/var/www/html
+    depends_on:
+      - db1
 
 networks:
   asa-net:
     driver: bridge
 
 volumes:
-  wordpress:
+  wordpress1:
+  wordpress2:
   db:
+  db1:
+  
   
