@@ -1,13 +1,19 @@
-zone "ifrn.asa.br" {
+zone "ifrn.asa.br" { //  zona 
 	type master;
-	file "/etc/bind/db.ifrn.asa.br";	
-	allow-transfer { any; };
-	allow-query { any; };
+	file "/etc/bind/ifrn.asa.br";	// caminho do arquivo da zona
+	allow-transfer {0.0.0.0; };		// IP do DNS Secundário
 };
 
-zone "par.ifrn.asa.br" {
+zone "par.ifrn.asa.br" { 
 	type master;
-	file "/etc/bind/db.par.ifrn.asa.br";	
-	allow-transfer { any; };
-	allow-query { any; };
+	file "/etc/bind/par.ifrn.asa.br";	// caminho do arquivo da zona
+	allow-transfer {0.0.0.0; };		// IP do DNS Secundário
 };
+
+// configuração para uma zona slave
+
+//zone "par.ifrn.asa.br" {
+//    type slave;
+//    masters { IP DO SERVIDOR MASTER; }; //  IP do servidor master
+//    file "/etc/bind/par.ifrn.asa.br";   // caminho do arquivo da zona no servidor slave
+//};
